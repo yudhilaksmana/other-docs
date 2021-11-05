@@ -1,0 +1,6 @@
+# BEFORE
+
+for projectname in $(oc get project --no-headers | awk '{print $1}'); do echo $projectname 'running pods:' $(oc get pods --no-headers -n $projectname | grep -i running | wc -l); oc get pods --no-headers -owide -n $projectname | grep -i running; printf "\n\n"; done >> running- pods-before-upgrade.txt
+
+# AFTER
+for projectname in $(oc get project --no-headers | awk '{print $1}'); do echo $projectname 'running pods:' $(oc get pods --no-headers -n $projectname | grep -i running | wc -l); oc get pods --no-headers -owide -n $projectname | grep -i running; printf "\n\n"; done >> running- pods-after-upgrade.txt
