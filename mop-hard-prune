@@ -1,0 +1,50 @@
+# MOP HARD PRUNE
+ 
+oc login https://api.np.ocbcnisp.com:6443 --insecure-skip-tls-verify=true; \
+oc project openshift-image-registry
+ 
+oc -n openshift-image-registry exec pod/image-registry-X -- /bin/sh \
+-c 'df -h | grep -i registry'
+ 
+oc adm prune images --keep-tag-revisions=X --keep-younger-than=X \
+--prune-registry=true
+ 
+CONTINUE HARD PRUNE
+ 
+oc patch configs.imageregistry.operator.openshift.io/cluster \
+-p '{""spec"":{""readOnly"":true}}' --type=merge
+ 
+service_account=$(oc get -n openshift-image-registry \
+-o jsonpath='{.spec.template.spec.serviceAccountName}' deploy/image-registry)
+ 
+oc adm policy add-cluster-role-to-user system:image-pruner \
+-z ${service_account} -n openshift-image-registry
+ 
+oc -n openshift-image-registry exec pod/image-registry-X \
+-- /bin/sh -c 'REGISTRY_LOG_LEVEL=info \
+/usr/bin/dockerregistry -prune=check'
+ 
+oc -n openshift-image-registry exec pod/image-registry-X -- \
+/bin/sh -c '/usr/bin/dockerregistry -prune=delete'"
+ 
+oc patch configs.imageregistry.operator.openshift.io/cluster \
+-p '{""spec"":{""readOnly"":false}}' --type=merge
+ 
+POST ACTION
+ 
+oc -n openshift-image-registry exec pod/image-registry-X -- /bin/sh \
+-c 'df -h | grep -i registry'
+ 
+podman login --tls-verify=false \
+default-route-openshift-image-registry.apps.np.ocbcnisp.com -u sysadmin \
+-p $(oc whoami -t)
+ 
+podman pull --tls-verify=false \
+default-route-openshift-image-registry.apps.np.ocbcnisp.com/itg-test/hello-openshift
+ 
+podman tag --tls-verify=false \
+default-route-openshift-image-registry.apps.np.ocbcnisp.com/itg-test/hello-openshift \
+default-route-openshift-image-registry.apps.np.ocbcnisp.com/itg-test/hello-openshift:test-push01
+ 
+podman push --tls-verify=false \
+default-route-openshift-image-registry.apps.np.ocbcnisp.com/itg-test/hello-openshift:test-push01
