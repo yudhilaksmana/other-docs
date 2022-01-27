@@ -1,0 +1,29 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  creationTimestamp: "2020-01-07T07:18:51Z"
+  generation: 1
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  name: 99-worker-registries
+  resourceVersion: "28038188"
+  selfLink: /apis/machineconfiguration.openshift.io/v1/machineconfigs/99-worker-registries
+  uid: f45d26f7-311d-11ea-83c2-005056ae0002
+spec:
+  config:
+    ignition:
+      version: 2.2.0
+    storage:
+      files:
+      - contents:
+          source: data:text/plain,unqualified-search-registries%20%3D%20%5B%22registry.access.redhat.com%22%2C%20%22docker.io%22%5D%0A%0A%5B%5Bregistry%5D%5D%0A%20%20location%20%3D%20%22nexus.appsnp.ocbcnisp.com%3A5000%22%0A%20%20insecure%20%3D%20true%0A%20%20blocked%20%3D%20false%0A%20%20mirror-by-digest-only%20%3D%20false%0A%20%20prefix%20%3D%20%22%22%0A%0A%5B%5Bregistry%5D%5D%0A%20%20location%20%3D%20%22nexus.appsnp.ocbcnisp.com%3A5001%22%0A%20%20insecure%20%3D%20true%0A%20%20blocked%20%3D%20false%0A%20%20mirror-by-digest-only%20%3D%20false%0A%20%20prefix%20%3D%20%22%22%0A%0A%5B%5Bregistry%5D%5D%0A%20%20location%20%3D%20%22nexus.appsnp.ocbcnisp.com%3A5005%22%0A%20%20insecure%20%3D%20true%0A%20%20blocked%20%3D%20false%0A%20%20mirror-by-digest-only%20%3D%20false%0A%20%20prefix%20%3D%20%22%22%0A%0A%5B%5Bregistry%5D%5D%0A%20%20location%20%3D%20%22nexus.appsnp.ocbcnisp.com%3A5006%22%0A%20%20insecure%20%3D%20true%0A%20%20blocked%20%3D%20false%0A%20%20mirror-by-digest-only%20%3D%20false%0A%20%20prefix%20%3D%20%22%22%0A%0A%5B%5Bregistry%5D%5D%0A%20%20location%20%3D%20%22docker.io%22%0A%20%20insecure%20%3D%20false%0A%20%20blocked%20%3D%20true%0A%20%20mirror-by-digest-only%20%3D%20false%0A%20%20prefix%20%3D%20%22%22%0A
+          verification: {}
+        filesystem: root
+        mode: 420
+        path: /etc/containers/registries.conf
+      - contents:
+          source: data:text/plain,%7B%22default%22%3A%5B%7B%22type%22%3A%22insecureAcceptAnything%22%7D%5D%2C%22transports%22%3A%7B%22atomic%22%3A%7B%22docker.io%22%3A%5B%7B%22type%22%3A%22reject%22%7D%5D%7D%2C%22docker%22%3A%7B%22docker.io%22%3A%5B%7B%22type%22%3A%22reject%22%7D%5D%7D%2C%22docker-daemon%22%3A%7B%22%22%3A%5B%7B%22type%22%3A%22insecureAcceptAnything%22%7D%5D%7D%7D%7D
+          verification: {}
+        filesystem: root
+        mode: 420
+        path: /etc/containers/policy.json
