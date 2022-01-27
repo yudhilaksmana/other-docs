@@ -1,0 +1,71 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  annotations:
+    machineconfiguration.openshift.io/generated-by-controller-version: 51dc0801ed7d705820f557fcabf04eff023bf568
+  creationTimestamp: "2021-05-07T14:45:05Z"
+  generation: 4
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  managedFields:
+  - apiVersion: machineconfiguration.openshift.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:machineconfiguration.openshift.io/generated-by-controller-version: {}
+        f:labels:
+          .: {}
+          f:machineconfiguration.openshift.io/role: {}
+        f:ownerReferences:
+          .: {}
+          k:{"uid":"94ded724-0d19-11ea-9d43-005056ae0000"}:
+            .: {}
+            f:apiVersion: {}
+            f:kind: {}
+            f:name: {}
+            f:uid: {}
+      f:spec:
+        .: {}
+        f:config:
+          .: {}
+          f:ignition:
+            .: {}
+            f:version: {}
+          f:storage:
+            .: {}
+            f:files: {}
+        f:extensions: {}
+        f:fips: {}
+        f:kernelArguments: {}
+        f:kernelType: {}
+        f:osImageURL: {}
+    manager: machine-config-controller
+    operation: Update
+    time: "2021-06-25T14:24:50Z"
+  name: 99-worker-generated-registries
+  ownerReferences:
+  - apiVersion: config.openshift.io/v1
+    kind: Image
+    name: cluster
+    uid: 94ded724-0d19-11ea-9d43-005056ae0000
+  resourceVersion: "830229112"
+  selfLink: /apis/machineconfiguration.openshift.io/v1/machineconfigs/99-worker-generated-registries
+  uid: 9fc683f8-9567-4a00-88b8-3a8c6417b076
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - contents:
+          source: data:text/plain,unqualified-search-registries%20%3D%20%5B%22registry.access.redhat.com%22%2C%20%22docker.io%22%5D%0A%0A%5B%5Bregistry%5D%5D%0A%20%20prefix%20%3D%20%22%22%0A%20%20location%20%3D%20%22nexus.appsnp.ocbcnisp.com%3A5000%22%0A%20%20insecure%20%3D%20true%0A
+        mode: 420
+        overwrite: true
+        path: /etc/containers/registries.conf
+  extensions: null
+  fips: false
+  kernelArguments: null
+  kernelType: ""
+  osImageURL: ""
