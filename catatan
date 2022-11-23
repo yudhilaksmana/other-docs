@@ -1,0 +1,1 @@
+count(max(kube_pod_status_phase{namespace="openshift-ingress",pod=~"service-promotion-cards.+",phase='Running', pod!~".*-deploy"}) by (pod))
